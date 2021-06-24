@@ -48,13 +48,13 @@ function Login() {
         // Signed in
         var user = userCredential.user;
         console.log(user);
-        swal("Good Job!", "Logged In Successfully!!", "success");
+        // swal("Good Job!", "Logged In Successfully!!", "success");
         history.replace(from);
       })
       .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
-        swal(`${errorCode}`, `${errorMessage}`, "error");
+        // swal(`${errorCode}`, `${errorMessage}`, "error");
       });
   };
 
@@ -66,7 +66,7 @@ function Login() {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        swal("Good Job!", "Created Account Successfully!!", "success");
+        // swal("Good Job!", "Created Account Successfully!!", "success");
         // ...
       })
       .catch((error) => {
