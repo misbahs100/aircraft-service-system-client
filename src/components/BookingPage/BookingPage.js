@@ -7,7 +7,10 @@ import Seats from '../Seats/Seats'
 
 const BookingPage = () => {
     const { ticketType } = useParams();
-    const [places, setPlaces] = useState({})
+    const [places, setPlaces] = useState({
+        // source: "anderkilla",
+        // destination: "patiya"
+    })
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -16,7 +19,6 @@ const BookingPage = () => {
         places.destination = data.destination;
         // console.log(places)
     }
-
     
     return (
         <div>
@@ -40,6 +42,7 @@ const BookingPage = () => {
 
             {/* seats */}
             <Seats ticketType={ticketType} places={places}></Seats>
+           
         </div>
     );
 };

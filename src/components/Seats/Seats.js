@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import StripePaymentForm from '../StripePaymentForm/StripePaymentForm'
@@ -7,7 +7,17 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51IebtOEfLSXh2ldbzYeSMtviCqBvw8YzxhRbhXc265i3Sm6U2KPd15mkawWspI5SKKHTR098dyG37HCBT5Ks8qsA00DWv77nhV');
 
 let backgroundColor = "bg-success";
-const red = "bg-danger"
+const red = "bg-danger";
+let bg1 = "bg-success";
+let bg2 = "bg-success";
+let bg3 = "bg-success";
+let bg4 = "bg-success";
+let bg5 = "bg-success";
+let bg6 = "bg-success";
+let bg7 = "bg-success";
+let bg8 = "bg-success";
+let bg9 = "bg-success";
+let bg10 = "bg-success";
 
 
 const Seats = ({ places, ticketType }) => {
@@ -15,11 +25,41 @@ const Seats = ({ places, ticketType }) => {
 
     let [ticketCount, setTicketCount] = useState(0);
     const [seats, setSeats] = useState([]);
+    let [preSeats, setPreSeats] = useState([]);
+    const [mongoSeats, setMongoSeats] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/orders')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                data.map(order => {
+                    if (order.places.source === places.source && order.places.destination === places.destination) {
+                        preSeats = order.seats;
+                        setPreSeats(preSeats)
+                        console.log(preSeats);
+                    }
+
+                })
+            })
+    }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:5000/seats')
+            .then(res => res.json())
+            .then(data => setMongoSeats(data))
+    }, [])
 
 
     const handleSeat = (seatNo) => {
 
+       if(seats.includes(seatNo)){
+            console.log("sorry, this seat is taken")
+       }
+       else{
         if (ticketCount <= 4) {
+
+            
             // console.log("seat clicked", seatNo)
             setTicketCount(++ticketCount);
             console.log("ticketCount", ticketCount);
@@ -30,6 +70,8 @@ const Seats = ({ places, ticketType }) => {
         else {
             console.log("exceed")
         }
+       }
+        
     }
 
 
@@ -37,37 +79,67 @@ const Seats = ({ places, ticketType }) => {
         <div>
             <div className="card mt-5 container">
                 <h2>Please choose a seat except RED (maximum 5)</h2>
-                <p>Your seats are: {seats.map(seat=><span>{seat}, </span>)}</p>
+                <p>Your seats are: {seats.map(seat => <span>{seat}, </span>)}</p>
 
                 <div className="row">
-                    <button className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black' }} onClick={() => handleSeat(1)}>
+
+                    {/* 
+                    {
+                        mongoSeats.map(seat =>
+                            preSeats.map(preSeat => seat.seatNo === preSeat ? 
+                                ((backgroundColor = "bg-danger") &&
+                                <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
+                                    {seat.seatNo}
+                                </div>)
+                                :
+                                ((backgroundColor = "d-none") &&
+                                <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
+                                    {seat.seatNo}
+                                </div>)
+                               
+                            )
+
+                        )
+                    } */}
+
+                    {preSeats.map(preSeat => preSeat === 1 && (bg1 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg1}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
                         1
-                    </button>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(2)}>
+                    </div>
+                    {preSeats.map(preSeat => preSeat === 2 && (bg2 = red))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg2}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(2)}>
                         2
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(3)}>
+                    {preSeats.map(preSeat => preSeat === 3 && (bg3 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg3}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(3)}>
                         3
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(4)}>
+                    {preSeats.map(preSeat => preSeat === 4 && (bg4 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg4}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(4)}>
                         4
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(5)}>
+                    {preSeats.map(preSeat => preSeat === 5 && (bg5 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg5}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(5)}>
                         5
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(6)}>
+                    {preSeats.map(preSeat => preSeat === 6 && (bg6 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg6}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(6)}>
                         6
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(7)}>
+                    {preSeats.map(preSeat => preSeat === 7 && (bg7 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg7}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(7)}>
                         7
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(8)}>
+                    {preSeats.map(preSeat => preSeat === 8 && (bg8 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg8}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(8)}>
                         8
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(9)}>
+                    {preSeats.map(preSeat => preSeat === 9 && (bg9 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg9}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(9)}>
                         9
                     </div>
-                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(10)}>
+                    {preSeats.map(preSeat => preSeat === 10 && (bg10 = "bg-danger"))}
+                    <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg10}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(10)}>
                         10
                     </div>
 
