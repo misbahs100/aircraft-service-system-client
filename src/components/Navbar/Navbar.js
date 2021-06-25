@@ -4,7 +4,7 @@ import { UserContext } from '../../App';
 
 const Navbar = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
 
@@ -24,9 +24,9 @@ const Navbar = () => {
                         <Link className="nav-link mr-5 text-warning" to="#">Contact Us</Link>
                     </li>
                     <li className="nav-item">
-                        {loggedInUser.email 
-                                ? <Link className="nav-link mr-5 text-danger" to="/login">{loggedInUser.name}</Link>
-                                : <Link className="nav-link mr-5 text-danger" to="/login">Login</Link>
+                        {loggedInUser.email
+                            ? <Link className="nav-link mr-5 text-danger" to="/login">{loggedInUser.name}</Link>
+                            : <Link className="nav-link mr-5 text-danger" to="/login">Login</Link>
                         }
                     </li>
                 </ul>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import StripePaymentForm from '../StripePaymentForm/StripePaymentForm'
 import { loadStripe } from '@stripe/stripe-js';
@@ -19,12 +18,9 @@ let bg9 = "bg-success";
 let bg10 = "bg-success";
 
 const Seats = ({ places, ticketType }) => {
-    console.log(places.source);
-
     let [ticketCount, setTicketCount] = useState(0);
     const [seats, setSeats] = useState([]);
     let [preSeats, setPreSeats] = useState([]);
-    // const [mongoSeats, setMongoSeats] = useState([]);
 
     useEffect(() => {
         fetch('https://aircraft-service-system-server.herokuapp.com/orders')
@@ -37,41 +33,27 @@ const Seats = ({ places, ticketType }) => {
                         setPreSeats(preSeats)
                         console.log(preSeats);
                     }
+                }
 
-                })
+                )
             })
     }, [])
 
-    // useEffect(() => {
-    //     fetch('http://localhost:5000/seats')
-    //         .then(res => res.json())
-    //         .then(data => setMongoSeats(data))
-    // }, [])
-
-
     const handleSeat = (seatNo) => {
-
         if (seats.includes(seatNo)) {
             alert("sorry, this seat is choosed before")
         }
         else {
             if (ticketCount <= 4) {
-
-
-                // console.log("seat clicked", seatNo)
                 setTicketCount(++ticketCount);
-                console.log("ticketCount", ticketCount);
                 seats.push(seatNo);
                 setSeats(seats);
-                console.log(seats);
             }
             else {
                 alert("Sorry, You can order maximum 5 tickets")
             }
         }
-
     }
-
 
     return (
         <div>
@@ -79,7 +61,6 @@ const Seats = ({ places, ticketType }) => {
                 <h2>Please choose your seats (maximum 5)</h2>
                 <h5>Green seats are available</h5>
                 <p>Your seats are: {seats.map(seat => <span>{seat}, </span>)}</p>
-
 
                 <div className="row">
                     {preSeats.map(preSeat => preSeat === 1 && (bg1 = "bg-danger"))}

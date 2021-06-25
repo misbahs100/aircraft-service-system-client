@@ -28,12 +28,6 @@ function App() {
           <PrivateRoute path="/booking/:ticketType">
             <BookingPage></BookingPage>
           </PrivateRoute>
-          {/* <Route path="/payment">
-            <Payment></Payment>
-          </Route>
-          <Route path="/seats">
-            <Seats></Seats>
-          </Route> */}
         </Switch>
       </Router>
     </UserContext.Provider>
