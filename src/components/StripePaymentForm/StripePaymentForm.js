@@ -55,7 +55,7 @@ const StripePaymentForm = ({ticketType, places, seats}) => {
         // setOrder(order);
 
         console.log(order);
-        fetch('http://localhost:5000/addAnOrder', {
+        fetch('https://aircraft-service-system-server.herokuapp.com/addAnOrder', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,9 +68,7 @@ const StripePaymentForm = ({ticketType, places, seats}) => {
         
         
     }
-    const handlePay = () => {
-       
-    }
+   
         return (
             <div className="row d-flex container mt-5 mb-5">
                 <div className="col-md-5">

@@ -27,7 +27,7 @@ const Seats = ({ places, ticketType }) => {
     // const [mongoSeats, setMongoSeats] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://aircraft-service-system-server.herokuapp.com/orders')
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -77,6 +77,7 @@ const Seats = ({ places, ticketType }) => {
         <div>
             <div className="card mt-5 container p-4">
                 <h2>Please choose your seats (maximum 5)</h2>
+                <h5>Green seats are available</h5>
                 <p>Your seats are: {seats.map(seat => <span>{seat}, </span>)}</p>
 
 

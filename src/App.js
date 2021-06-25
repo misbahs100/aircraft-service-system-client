@@ -10,8 +10,6 @@ import { createContext, useState } from 'react';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Login from './components/Login/Login';
 import BookingPage from './components/BookingPage/BookingPage';
-import Payment from './components/Payment/Payment';
-import Seats from './components/Seats/Seats';
 
 export const UserContext = createContext();
 

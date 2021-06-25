@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router";
 import swal from "sweetalert";
 import { UserContext } from "../../App";
 import firebaseConfig from "./firebase.config";
+import './Login.css';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -108,7 +109,7 @@ function Login() {
 
   return (
     <>
-      <section className="container">
+      <section className=" bg-light" style={{height: '100vh'}}>
         <div className="form_container">
           <div className="form_child">
             <h1 className="fw-bold text-center">
@@ -146,7 +147,7 @@ function Login() {
                 )}
               </div>
               <br />
-              <button className="btn btn-outline-info w-100" type="submit">
+              <button className="btn btn-outline-warning w-100" type="submit">
                 {isNewUser ? "Sign UP" : "Log In"}
               </button>
             </form>
