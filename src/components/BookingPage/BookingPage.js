@@ -1,45 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import { useForm } from "react-hook-form";
 import { Link, useParams } from 'react-router-dom';
-
-
+import Seats from '../Seats/Seats'
 
 
 const BookingPage = () => {
     const { id } = useParams();
+    const [places, setPlaces] = useState({})
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        // console.log(data);
+        places.source = data.source;
+        places.destination = data.destination;
+        // console.log(places)
+    }
+
+    
     return (
         <div>
             <Navbar />
             <div className="card container mt-5">
                 <h2>Please add your source and destination</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-
                     <input {...register("source", { required: true })} placeholder="your source" />
                     {errors.source && <span>This field is required</span>}
-
                     <br /><br />
 
                     <input {...register("destination", { required: true })} placeholder="your destination" />
                     {errors.destination && <span>This field is required</span>}
-
-                    
-
                     <br /><br />
 
-                    <Link to="/seats">
+                    {/* <Link to={`/seats`}> */}
                         <button type="submit">submit</button>
-                    </Link>
-
-
-
-
+                    {/* </Link> */}
                 </form>
             </div>
 
+            {/* seats */}
+            <Seats places={places}></Seats>
         </div>
     );
 };

@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Elements } from '@stripe/react-stripe-js';
+import StripePaymentForm from '../StripePaymentForm/StripePaymentForm'
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51IebtOEfLSXh2ldbzYeSMtviCqBvw8YzxhRbhXc265i3Sm6U2KPd15mkawWspI5SKKHTR098dyG37HCBT5Ks8qsA00DWv77nhV');
 
 let backgroundColor = "bg-success";
 const red = "bg-danger"
 
 
-const Seats = () => {
+const Seats = ({ places }) => {
+    console.log(places.source);
+
     let [ticketCount, setTicketCount] = useState(0);
+    const [seats, setSeats] = useState([]);
+
 
     const handleSeat = (seatNo) => {
 
         if (ticketCount <= 4) {
-            console.log("seat clicked", seatNo)
+            // console.log("seat clicked", seatNo)
             setTicketCount(++ticketCount);
             console.log("ticketCount", ticketCount);
+            seats.push(seatNo);
+            setSeats(seats);
+            console.log(seats);
         }
         else {
             console.log("exceed")
@@ -24,7 +36,8 @@ const Seats = () => {
     return (
         <div>
             <div className="card mt-5 container">
-                <h2>Please choose a seat except RED</h2>
+                <h2>Please choose a seat except RED (maximum 5)</h2>
+                <p>Your seats are: {seats.map(seat=><span>{seat}, </span>)}</p>
 
                 <div className="row">
                     <button className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black' }} onClick={() => handleSeat(1)}>
@@ -61,9 +74,17 @@ const Seats = () => {
 
                 </div>
 
-                <Link to="/payment">
-                    <button>Done</button>
-                </Link>
+                {/* <Link to="/payment"> */}
+                <button>Done</button>
+                {/* </Link> */}
+
+
+            </div>
+
+            <div className="card mt-5 container">
+                <Elements stripe={stripePromise}>
+                    <StripePaymentForm places={places} seats={seats}></StripePaymentForm>
+                </Elements>
             </div>
         </div>
     );

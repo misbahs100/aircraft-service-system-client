@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { UserContext } from '../../App';
 
 
-const StripePaymentForm = () => {
+const StripePaymentForm = ({places, seats}) => {
     const stripe = useStripe();
     const elements = useElements();
 
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [paymentError, setPaymentError] = useState(null);
     const [paymentSuccess, setPaymentSuccess] = useState(null);
+    const [order, setOrder] = useState();
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -44,6 +45,8 @@ const StripePaymentForm = () => {
         const order = {
             userName: loggedInUser.name,
             email: loggedInUser.email,
+            places: places,
+            seats: seats,
             userPostalCode: paymentMethod.billing_details.address.postal_code,
             cardLast4: paymentMethod.card.last4,
             // serviceName: service.name,
@@ -51,8 +54,14 @@ const StripePaymentForm = () => {
             // serviceImage: service.imageURL,
             // serviceDescription: service.description,
             orderTime: new Date().toDateString()
-
         }
+        setOrder(order);
+        console.log(order);
+        
+        
+    }
+    const handlePay = () => {
+        console.log(order);
     }
         return (
             <div className="row d-flex container mt-5">
@@ -65,9 +74,10 @@ const StripePaymentForm = () => {
                         </div>
                         <div className="d-flex align-items-center justify-content-between mb-2">
                             <div className=""><p className="">Your service will cost $10</p></div>
-                            <div><button type="submit" disabled={!stripe} className="btn btn-warning">Pay</button></div>
+                            <div><button type="submit" disabled={!stripe} className="btn btn-warning" onClick={handlePay}>Pay</button></div>
                         </div>
                     </form>
+                    {/* <button onClick={handlePay}>OK</button> */}
 
                     {
                         paymentError && <p style={{ color: 'red' }}>{paymentError}</p>
