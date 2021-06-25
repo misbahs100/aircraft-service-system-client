@@ -19,7 +19,7 @@ const HeaderMain = () => {
                 </div>
 
                 <div className="col-md-6 d-flex justify-content-center">
-                    <Link to="/booking/1">
+                    <Link to="/booking/business">
                         <div>
                             <img style={{ width: '300px' }} src={business} alt="" />
                             <h3 className="text-white text-center">Business class</h3>
@@ -28,7 +28,7 @@ const HeaderMain = () => {
                 </div>
 
                 <div className="col-md-6 d-flex justify-content-center">
-                    <Link to="booking/2">
+                    <Link to="booking/economy">
                         <div>
                             <img style={{ width: '300px' }} src={economy} alt="" />
                             <h3 className="text-white text-center">Economy class</h3>

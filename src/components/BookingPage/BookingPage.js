@@ -6,7 +6,7 @@ import Seats from '../Seats/Seats'
 
 
 const BookingPage = () => {
-    const { id } = useParams();
+    const { ticketType } = useParams();
     const [places, setPlaces] = useState({})
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -39,7 +39,7 @@ const BookingPage = () => {
             </div>
 
             {/* seats */}
-            <Seats places={places}></Seats>
+            <Seats ticketType={ticketType} places={places}></Seats>
         </div>
     );
 };

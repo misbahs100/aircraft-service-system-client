@@ -27,7 +27,7 @@ function App() {
           <Route path="/login">
             <Login></Login>
           </Route>
-          <PrivateRoute path="/booking/:id">
+          <PrivateRoute path="/booking/:ticketType">
             <BookingPage></BookingPage>
           </PrivateRoute>
           {/* <Route path="/payment">

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { UserContext } from '../../App';
 
 
-const StripePaymentForm = ({places, seats}) => {
+const StripePaymentForm = ({ticketType, places, seats}) => {
     const stripe = useStripe();
     const elements = useElements();
 
@@ -45,23 +45,31 @@ const StripePaymentForm = ({places, seats}) => {
         const order = {
             userName: loggedInUser.name,
             email: loggedInUser.email,
+            ticketType: ticketType,
             places: places,
             seats: seats,
             userPostalCode: paymentMethod.billing_details.address.postal_code,
             cardLast4: paymentMethod.card.last4,
-            // serviceName: service.name,
-            // servicePrice: service.price,
-            // serviceImage: service.imageURL,
-            // serviceDescription: service.description,
             orderTime: new Date().toDateString()
         }
-        setOrder(order);
+        // setOrder(order);
+
         console.log(order);
+        fetch('http://localhost:5000/addAnOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+            .then(res => {
+                alert('Ticket(s) ordered Successfully.');
+            })
         
         
     }
     const handlePay = () => {
-        console.log(order);
+       
     }
         return (
             <div className="row d-flex container mt-5">
@@ -74,7 +82,7 @@ const StripePaymentForm = ({places, seats}) => {
                         </div>
                         <div className="d-flex align-items-center justify-content-between mb-2">
                             <div className=""><p className="">Your service will cost $10</p></div>
-                            <div><button type="submit" disabled={!stripe} className="btn btn-warning" onClick={handlePay}>Pay</button></div>
+                            <div><button type="submit" disabled={!stripe} className="btn btn-warning">Pay</button></div>
                         </div>
                     </form>
                     {/* <button onClick={handlePay}>OK</button> */}

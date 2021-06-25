@@ -10,7 +10,7 @@ let backgroundColor = "bg-success";
 const red = "bg-danger"
 
 
-const Seats = ({ places }) => {
+const Seats = ({ places, ticketType }) => {
     console.log(places.source);
 
     let [ticketCount, setTicketCount] = useState(0);
@@ -83,7 +83,7 @@ const Seats = ({ places }) => {
 
             <div className="card mt-5 container">
                 <Elements stripe={stripePromise}>
-                    <StripePaymentForm places={places} seats={seats}></StripePaymentForm>
+                    <StripePaymentForm ticketType={ticketType} places={places} seats={seats}></StripePaymentForm>
                 </Elements>
             </div>
         </div>
