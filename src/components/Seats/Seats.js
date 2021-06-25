@@ -6,7 +6,6 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe('pk_test_51IebtOEfLSXh2ldbzYeSMtviCqBvw8YzxhRbhXc265i3Sm6U2KPd15mkawWspI5SKKHTR098dyG37HCBT5Ks8qsA00DWv77nhV');
 
-let backgroundColor = "bg-success";
 const red = "bg-danger";
 let bg1 = "bg-success";
 let bg2 = "bg-success";
@@ -19,14 +18,13 @@ let bg8 = "bg-success";
 let bg9 = "bg-success";
 let bg10 = "bg-success";
 
-
 const Seats = ({ places, ticketType }) => {
     console.log(places.source);
 
     let [ticketCount, setTicketCount] = useState(0);
     const [seats, setSeats] = useState([]);
     let [preSeats, setPreSeats] = useState([]);
-    const [mongoSeats, setMongoSeats] = useState([]);
+    // const [mongoSeats, setMongoSeats] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:5000/orders')
@@ -44,64 +42,45 @@ const Seats = ({ places, ticketType }) => {
             })
     }, [])
 
-    useEffect(() => {
-        fetch('http://localhost:5000/seats')
-            .then(res => res.json())
-            .then(data => setMongoSeats(data))
-    }, [])
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/seats')
+    //         .then(res => res.json())
+    //         .then(data => setMongoSeats(data))
+    // }, [])
 
 
     const handleSeat = (seatNo) => {
 
-       if(seats.includes(seatNo)){
-            console.log("sorry, this seat is taken")
-       }
-       else{
-        if (ticketCount <= 4) {
-
-            
-            // console.log("seat clicked", seatNo)
-            setTicketCount(++ticketCount);
-            console.log("ticketCount", ticketCount);
-            seats.push(seatNo);
-            setSeats(seats);
-            console.log(seats);
+        if (seats.includes(seatNo)) {
+            alert("sorry, this seat is choosed before")
         }
         else {
-            console.log("exceed")
+            if (ticketCount <= 4) {
+
+
+                // console.log("seat clicked", seatNo)
+                setTicketCount(++ticketCount);
+                console.log("ticketCount", ticketCount);
+                seats.push(seatNo);
+                setSeats(seats);
+                console.log(seats);
+            }
+            else {
+                alert("Sorry, You can order maximum 5 tickets")
+            }
         }
-       }
-        
+
     }
 
 
     return (
         <div>
-            <div className="card mt-5 container">
-                <h2>Please choose a seat except RED (maximum 5)</h2>
+            <div className="card mt-5 container p-4">
+                <h2>Please choose your seats (maximum 5)</h2>
                 <p>Your seats are: {seats.map(seat => <span>{seat}, </span>)}</p>
 
+
                 <div className="row">
-
-                    {/* 
-                    {
-                        mongoSeats.map(seat =>
-                            preSeats.map(preSeat => seat.seatNo === preSeat ? 
-                                ((backgroundColor = "bg-danger") &&
-                                <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
-                                    {seat.seatNo}
-                                </div>)
-                                :
-                                ((backgroundColor = "d-none") &&
-                                <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${backgroundColor}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
-                                    {seat.seatNo}
-                                </div>)
-                               
-                            )
-
-                        )
-                    } */}
-
                     {preSeats.map(preSeat => preSeat === 1 && (bg1 = "bg-danger"))}
                     <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg1}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(1)}>
                         1
@@ -142,15 +121,7 @@ const Seats = ({ places, ticketType }) => {
                     <div className={`col-md-3 d-flex justify-content-center mx-2 my-2 ${bg10}`} style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => handleSeat(10)}>
                         10
                     </div>
-
-
                 </div>
-
-                {/* <Link to="/payment"> */}
-                <button>Done</button>
-                {/* </Link> */}
-
-
             </div>
 
             <div className="card mt-5 container">

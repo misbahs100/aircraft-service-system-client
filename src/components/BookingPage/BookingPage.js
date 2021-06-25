@@ -21,9 +21,9 @@ const BookingPage = () => {
     }
     
     return (
-        <div>
+        <div className="bg-light">
             <Navbar />
-            <div className="card container mt-5">
+            <div className="card container mt-5 p-4">
                 <h2>Please add your source and destination</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input {...register("source", { required: true })} placeholder="your source" />
@@ -35,7 +35,7 @@ const BookingPage = () => {
                     <br /><br />
 
                     {/* <Link to={`/seats`}> */}
-                        <button type="submit">submit</button>
+                        <button type="submit" className="btn btn-warning">submit</button>
                     {/* </Link> */}
                 </form>
             </div>

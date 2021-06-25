@@ -72,7 +72,7 @@ const StripePaymentForm = ({ticketType, places, seats}) => {
        
     }
         return (
-            <div className="row d-flex container mt-5">
+            <div className="row d-flex container mt-5 mb-5">
                 <div className="col-md-5">
                     <h5>Payment through your card</h5><br />
                     <form onSubmit={handleSubmit}>

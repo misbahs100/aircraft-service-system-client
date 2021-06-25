@@ -31,8 +31,8 @@ const Navbar = () => {
                     </li>
                     <li className="nav-item">
                         {loggedInUser.email 
-                                ? <Link className="nav-link mr-5 text-warning" to="/login">{loggedInUser.name}</Link>
-                                : <Link className="nav-link mr-5 text-warning" to="/login">Login</Link>
+                                ? <Link className="nav-link mr-5 text-danger" to="/login">{loggedInUser.name}</Link>
+                                : <Link className="nav-link mr-5 text-danger" to="/login">Login</Link>
                         }
                     </li>
                 </ul>
